@@ -1,0 +1,76 @@
+================================================================================
+PRACTICAL 1: Creating MVC Project using ASP.NET Core
+================================================================================
+
+AIM:
+To create a Model-View-Controller (MVC) web application using ASP.NET Core and understand its architecture.
+
+THEORY:
+ASP.NET Core MVC is a framework for building web applications using the Model-View-Controller architectural pattern. This pattern separates an application into three main components: the Model (data and business logic), the View (UI logic), and the Controller (handling user input). This separation helps manage complexity and makes the application easier to test and maintain.
+
+WORKING STEPS:
+
+1. Create Project via CLI:
+Open Command Prompt. Navigate to your desired folder. Create a directory and the MVC project:
+
+md practMVC
+cd practMVC
+dotnet new mvc --auth None
+dotnet build
+dotnet run
+
+Copy the listening URL (e.g., http://localhost:5083) and paste it into Chrome to verify it runs.
+
+2. Open in Visual Studio:
+Go to the practMVC folder, right-click the .csproj file -> Open with -> Visual Studio 2022. Press the green Play button.
+
+3. Add a Model:
+Right-click Models folder -> Add -> Class -> Name it StockQuote.cs.
+
+namespace practMVC.Models
+{
+    public class StockQuote
+    {
+        public string? Symbol { get; set; }
+        public int Price { get; set; }
+    }
+}
+
+4. Update Controller:
+Open Controllers/HomeController.cs. Modify the Index() method.
+
+public IActionResult Index()
+{
+    var model = new StockQuote { Symbol = "Nike", Price = 3200 };
+    return View(model);
+}
+
+5. Update View:
+Open Views/Home/Index.cshtml. Replace content with:
+
+@model practMVC.Models.StockQuote
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h2>Stock Information</h2>
+    <p>Symbol: @Model.Symbol</p>
+    <p>Price: @Model.Price</p>
+</div>
+
+6. Run the Project:
+Press the green Play button in Visual Studio or run dotnet run in the terminal. Open the localhost URL in your browser.
+
+COMMON PROBLEMS & SOLUTIONS:
+
+Problem 1: "The localhost page isn't working" or Port Conflict.
+- Solution: Another application is using the same port. Open Properties/launchSettings.json in your project and change the port number (e.g., from 5083 to 5084).
+
+Problem 2: "dotnet run" command not recognized.
+- Solution: Ensure the .NET SDK is installed and added to your system PATH. Restart your command prompt.
+
+OUTPUT:
+The browser displays the MVC web page with "Symbol: Nike" and "Price: 3200", demonstrating data flow from Controller to View.
